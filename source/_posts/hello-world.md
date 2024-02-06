@@ -1,38 +1,18 @@
 ---
-title: Hello World
+title: 测试文章
+author: changqing
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+## Pulsar 异地容灾
 
-### Create a new post
+### 多集群部署
 
-``` bash
-$ hexo new "My New Post"
-```
+这种方式利用了消息的异步复制功能。
+在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可能有部分丢失），客户端就可以通过备份集群继续处理消息。同时，客户端发送到备份集群的消息会在之前集群恢复后发送到之前的集群。
 
-More info: [Writing](https://hexo.io/docs/writing.html)
 
-### Run server
+### 基于地区的数据副本保存策略
 
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+这种方式利用了消息的同步复制功能。
+即在多个数据中心建立一个大集群，每个地区的计算节点收到消息后都会通过同步的方式发送到多个数据中心的存储节点，从而保证一条消息的多个副本分散在多个数据中心（ADMQ会根据存储节点的配置信息区分不同数据中心的节点，消息写入时就可以确保消息写入到多个数据中心的节点）。这样一个数据中心不可用时，客户端可以读取到存在其他数据中心的消息。
+这种方案能确保不会丢失消息，但是延迟会比第一种高一点。
