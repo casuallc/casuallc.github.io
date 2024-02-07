@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo 使用</title>
+    <url>/2024/02/06/Hexo-%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="使用-Hexo-搭建网站"><a href="#使用-Hexo-搭建网站" class="headerlink" title="使用 Hexo 搭建网站"></a>使用 Hexo 搭建网站</h1><blockquote>
+<p>这里只是记录一些关键点，具体操作步骤参考官网：<a href="https://hexo.io/">https://hexo.io/</a></p>
+</blockquote>
+<h1 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h1><p><strong>生成文章</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &#x27;title&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置目录和标签</strong><br>通过 tags、categories 设置，如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">tags: </span><br><span class="line">- 教程</span><br><span class="line">categories:</span><br><span class="line">- 2024</span><br></pre></td></tr></table></figure>
+
+<p><strong>上传图片</strong><br>把图片放到 &#x2F;source&#x2F;imgs&#x2F; 下，通过如下方式引用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![window 桌面图片](/imgs/2024/20240205.jpg)  // markdown 语法</span><br></pre></td></tr></table></figure>
+<p><img src="/imgs/2024/20240205.jpg" alt="window 桌面图片"></p>
+<p><strong>编译成静态 HTML 文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p><strong>本地启动服务，预览结果</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署到-Github"><a href="#部署到-Github" class="headerlink" title="部署到 Github"></a>部署到 Github</h1><p>需要在 _config.yml 中配置 github 地址和推送分支信息<br>然后依次执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<h1 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h1><p><strong>设置目录</strong></p>
+<ul>
+<li>二级及以下的标题为文章内右侧目录</li>
+<li>categories 可以设置层级，依次在下方列出即可</li>
+<li>tags 可以设置多个</li>
+</ul>
+]]></content>
+      <categories>
+        <category>2024</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Bean 生命周期</title>
+    <url>/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
+    <content><![CDATA[<h1 id="Spring-Bean-生命周期"><a href="#Spring-Bean-生命周期" class="headerlink" title="Spring Bean 生命周期"></a>Spring Bean 生命周期</h1><p>spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。<br>spring bean 的生命周期如下图所示：<br><img src="/imgs/2024/0207_spring-bean-life.png" alt="Spring Bean 生命周期"></p>
+<p>其中 BeanPostProcessor 是对所有 Bean 进行拦截， InitializingBean 是对当前 Bean 进行拦截。所以如果需要在一个 Bean 初始化时做一些初始化的工作，则要实现 InitializingBean 接口。<br>示例如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.BeanPostProcessor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestBeanInit</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">        <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessBeforeInitialization(bean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">        <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessAfterInitialization(bean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现该接口后会在每个 Bean 初始化时都进行拦截，因此会传递当前初始化的 Bean。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.InitializingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestBeanInit</span> <span class="keyword">implements</span> <span class="title class_">InitializingBean</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        name = <span class="string">&quot;123&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该接口只会在当前 Bean 初始化时执行。</p>
+]]></content>
+      <categories>
+        <category>2024</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>学习</tag>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测试文章</title>
+    <url>/2023/04/05/hello-world/</url>
+    <content><![CDATA[<h2 id="Pulsar-异地容灾"><a href="#Pulsar-异地容灾" class="headerlink" title="Pulsar 异地容灾"></a>Pulsar 异地容灾</h2><h3 id="多集群部署"><a href="#多集群部署" class="headerlink" title="多集群部署"></a>多集群部署</h3><p>这种方式利用了消息的异步复制功能。<br>在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可能有部分丢失），客户端就可以通过备份集群继续处理消息。同时，客户端发送到备份集群的消息会在之前集群恢复后发送到之前的集群。</p>
+<h3 id="基于地区的数据副本保存策略"><a href="#基于地区的数据副本保存策略" class="headerlink" title="基于地区的数据副本保存策略"></a>基于地区的数据副本保存策略</h3><p>这种方式利用了消息的同步复制功能。<br>即在多个数据中心建立一个大集群，每个地区的计算节点收到消息后都会通过同步的方式发送到多个数据中心的存储节点，从而保证一条消息的多个副本分散在多个数据中心（ADMQ会根据存储节点的配置信息区分不同数据中心的节点，消息写入时就可以确保消息写入到多个数据中心的节点）。这样一个数据中心不可用时，客户端可以读取到存在其他数据中心的消息。<br>这种方案能确保不会丢失消息，但是延迟会比第一种高一点。</p>
+]]></content>
+  </entry>
+</search>
