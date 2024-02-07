@@ -7,11 +7,8 @@ title: 一叶扁舟
 subtitle: ''
 description: '闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。'
 keywords: changqing
-author: changqing.liu
-language:
-  - zh-CN
-  - en
-  - zh-TW
+author: 安可
+language: zh-CN
 timezone: 'Asia/Shanghai'
 
 import:
@@ -121,7 +118,22 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: volantis
+# theme: volantis
+theme: next
+
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 4
+  wpm: 275
+  suffix: "mins."
+
+auto_excerpt:
+  enable: true
+  length: 150
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
