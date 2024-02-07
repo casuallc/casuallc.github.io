@@ -9,10 +9,10 @@ categories:
 ---
 
 
-# 使用 Hexo 搭建网站
+## 使用 Hexo 搭建网站
 > 这里只是记录一些关键点，具体操作步骤参考官网：https://hexo.io/
 
-## 创建新文章
+### 创建新文章
 
 **生成文章**
 ``` shell
@@ -45,7 +45,7 @@ hexo g
 hexo s
 ```
 
-# 部署到 Github
+### 部署到 Github
 需要在 _config.yml 中配置 github 地址和推送分支信息
 然后依次执行以下命令：
 ``` shell
@@ -53,3 +53,9 @@ hexo clean
 hexo g
 hexo d
 ```
+### 其他知识点
+**设置目录**
+- 二级及以下的标题为文章内右侧目录
+- categories 可以设置层级，依次在下方列出即可
+- tags 可以设置多个
+ 
