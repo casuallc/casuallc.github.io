@@ -14,19 +14,19 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Spring Bean 生命周期spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。spring bean 的生命周期如下图所示： 其中 BeanPostProcessor 是对所有 Bean 进行拦截， InitializingBean 是对当前 Bean 进行拦截。所以如果需要在一个 Bean 初始化时做一些初始化的工作，则">
+  <meta name="description" content="Spring Bean 生命周期spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。spring bean 的生命周期如下图所示：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Bean 生命周期">
 <meta property="og:url" content="https://casuallc.github.io/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="一叶扁舟">
-<meta property="og:description" content="Spring Bean 生命周期spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。spring bean 的生命周期如下图所示： 其中 BeanPostProcessor 是对所有 Bean 进行拦截， InitializingBean 是对当前 Bean 进行拦截。所以如果需要在一个 Bean 初始化时做一些初始化的工作，则">
+<meta property="og:description" content="Spring Bean 生命周期spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。spring bean 的生命周期如下图所示：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://casuallc.github.io/imgs/2024/0207_spring-bean-life.png">
 <meta property="article:published_time" content="2024-02-07T01:33:00.000Z">
-<meta property="article:modified_time" content="2024-02-07T01:39:12.499Z">
+<meta property="article:modified_time" content="2024-02-08T04:11:55.537Z">
 <meta property="article:author" content="安可">
 <meta property="article:tag" content="教程">
 <meta property="article:tag" content="学习">
@@ -223,10 +223,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-02-07 09:33:00 / 修改时间：09:39:12" itemprop="dateCreated datePublished" datetime="2024-02-07T09:33:00+08:00">2024-02-07</time>
+              <time title="创建时间：2024-02-07 09:33:00" itemprop="dateCreated datePublished" datetime="2024-02-07T09:33:00+08:00">2024-02-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-08 12:11:55" itemprop="dateModified" datetime="2024-02-08T12:11:55+08:00">2024-02-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -245,6 +251,20 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
@@ -268,6 +288,8 @@
 
       
         <h1 id="Spring-Bean-生命周期"><a href="#Spring-Bean-生命周期" class="headerlink" title="Spring Bean 生命周期"></a>Spring Bean 生命周期</h1><p>spring 在初始化时会通过注解或者配置文件初始化所有的 bean，在初始化过程中支持执行自定义的逻辑，比如加载配置等。<br>spring bean 的生命周期如下图所示：<br><img src="/imgs/2024/0207_spring-bean-life.png" alt="Spring Bean 生命周期"></p>
+<span id="more"></span>
+
 <p>其中 BeanPostProcessor 是对所有 Bean 进行拦截， InitializingBean 是对当前 Bean 进行拦截。所以如果需要在一个 Bean 初始化时做一些初始化的工作，则要实现 InitializingBean 接口。<br>示例如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.BeanPostProcessor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestBeanInit</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">        <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessBeforeInitialization(bean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">        <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessAfterInitialization(bean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实现该接口后会在每个 Bean 初始化时都进行拦截，因此会传递当前初始化的 Bean。</p>
@@ -296,7 +318,10 @@
     <a href="/2024/02/06/Hexo-%E4%BD%BF%E7%94%A8/" rel="prev" title="Hexo 使用">
       <i class="fa fa-chevron-left"></i> Hexo 使用
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" rel="next" title="基于 valine 和 leancloud 的评论系统">
+      基于 valine 和 leancloud 的评论系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -309,6 +334,7 @@
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -370,7 +396,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -379,7 +405,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -423,12 +449,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">2k</span>
+    <span title="站点总字数">3k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2 分钟</span>
+    <span title="站点阅读时长">3 分钟</span>
 </div>
 
         
@@ -568,6 +594,35 @@ window.addEventListener('pjax:success', () => {
   
 
   
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'g35up0qqz7wC6PpRmOHkoxuJ-MdYXbMMI',
+      appKey     : 'dqDY7XgTVacHmkoT7eTIPlcl',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://g35up0qq.api.lncldglobal.com'
+    });
+  }, window.Valine);
+});
+</script>
 
     </div>
 </body>

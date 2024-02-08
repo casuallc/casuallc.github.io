@@ -17,20 +17,27 @@
     var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Pulsar 异地容灾多集群部署这种方式利用了消息的异步复制功能。在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可">
+  <meta name="description" content="评论系统基于 hexo next 主题搭建博客后，测试了几种评论系统，像畅言、Gitalk 等都需要登陆后才能评论，实际用起来比较繁琐，而且评论的人基于安全的考虑也不会授权第三方评论系统获得自己的账号授权。 试想，一个偶然发现的网站，一个没怎么听到过的系统，怎么会允许获取自己的账号授权呢。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试文章">
-<meta property="og:url" content="https://casuallc.github.io/2023/04/05/hello-world/index.html">
+<meta property="og:title" content="基于 valine 和 leancloud 的评论系统">
+<meta property="og:url" content="https://casuallc.github.io/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="一叶扁舟">
-<meta property="og:description" content="Pulsar 异地容灾多集群部署这种方式利用了消息的异步复制功能。在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可">
+<meta property="og:description" content="评论系统基于 hexo next 主题搭建博客后，测试了几种评论系统，像畅言、Gitalk 等都需要登陆后才能评论，实际用起来比较繁琐，而且评论的人基于安全的考虑也不会授权第三方评论系统获得自己的账号授权。 试想，一个偶然发现的网站，一个没怎么听到过的系统，怎么会允许获取自己的账号授权呢。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-05T08:16:39.621Z">
-<meta property="article:modified_time" content="2024-02-08T04:11:32.323Z">
+<meta property="og:image" content="https://casuallc.github.io/imgs/2024/0208_leancloud_register.png">
+<meta property="og:image" content="https://casuallc.github.io/imgs/2024/0208_leancloud_create_app.png">
+<meta property="og:image" content="https://casuallc.github.io/imgs/2024/0208_leancloud_create_app_dev.png">
+<meta property="og:image" content="https://casuallc.github.io/imgs/2024/0208_leancloud_app_setting.png">
+<meta property="og:image" content="https://casuallc.github.io/imgs/2024/0208_valine_comment.png">
+<meta property="article:published_time" content="2024-02-08T06:36:48.000Z">
+<meta property="article:modified_time" content="2024-02-08T07:01:37.692Z">
 <meta property="article:author" content="安可">
-<meta property="article:tag" content="changqing">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://casuallc.github.io/imgs/2024/0208_leancloud_register.png">
 
-<link rel="canonical" href="https://casuallc.github.io/2023/04/05/hello-world/">
+<link rel="canonical" href="https://casuallc.github.io/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/">
 
 
 <script id="page-configurations">
@@ -43,7 +50,7 @@
   };
 </script>
 
-  <title>测试文章 | 一叶扁舟</title>
+  <title>基于 valine 和 leancloud 的评论系统 | 一叶扁舟</title>
   
 
 
@@ -197,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2023/04/05/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/imgs/avatar.png">
@@ -210,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          测试文章
+          基于 valine 和 leancloud 的评论系统
         </h1>
 
         <div class="post-meta">
@@ -219,16 +226,19 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-04-05 16:16:39" itemprop="dateCreated datePublished" datetime="2023-04-05T16:16:39+08:00">2023-04-05</time>
+              <time title="创建时间：2024-02-08 14:36:48 / 修改时间：15:01:37" itemprop="dateCreated datePublished" datetime="2024-02-08T14:36:48+08:00">2024-02-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-08 12:11:32" itemprop="dateModified" datetime="2024-02-08T12:11:32+08:00">2024-02-08</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024/" itemprop="url" rel="index"><span itemprop="name">2024</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -246,8 +256,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/04/05/hello-world/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/04/05/hello-world/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -256,7 +266,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>481</span>
+              <span>910</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -274,10 +284,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Pulsar-异地容灾"><a href="#Pulsar-异地容灾" class="headerlink" title="Pulsar 异地容灾"></a>Pulsar 异地容灾</h2><h3 id="多集群部署"><a href="#多集群部署" class="headerlink" title="多集群部署"></a>多集群部署</h3><p>这种方式利用了消息的异步复制功能。<br>在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可能有部分丢失），客户端就可以通过备份集群继续处理消息。同时，客户端发送到备份集群的消息会在之前集群恢复后发送到之前的集群。</p>
+        <h1 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h1><p>基于 hexo next 主题搭建博客后，测试了几种评论系统，像畅言、Gitalk 等都需要登陆后才能评论，实际用起来比较繁琐，而且评论的人基于安全的考虑也不会授权第三方评论系统获得自己的账号授权。</p>
+<p>试想，一个偶然发现的网站，一个没怎么听到过的系统，怎么会允许获取自己的账号授权呢。</p>
 <span id="more"></span>
 
-<h3 id="基于地区的数据副本保存策略"><a href="#基于地区的数据副本保存策略" class="headerlink" title="基于地区的数据副本保存策略"></a>基于地区的数据副本保存策略</h3><p>这种方式利用了消息的同步复制功能。<br>即在多个数据中心建立一个大集群，每个地区的计算节点收到消息后都会通过同步的方式发送到多个数据中心的存储节点，从而保证一条消息的多个副本分散在多个数据中心（ADMQ会根据存储节点的配置信息区分不同数据中心的节点，消息写入时就可以确保消息写入到多个数据中心的节点）。这样一个数据中心不可用时，客户端可以读取到存在其他数据中心的消息。<br>这种方案能确保不会丢失消息，但是延迟会比第一种高一点。</p>
+<h1 id="leancloud-valine"><a href="#leancloud-valine" class="headerlink" title="leancloud &amp; valine"></a>leancloud &amp; valine</h1><p>leancloud 是一个云计算平台，可以在上边创建应用，然后通过 http 或者其他方式调用平台对外提供的接口。最重要的是，平台提供的接口调用和存储功能都免费！！！</p>
+<p>而 valine 就是基于这一特性，在 hexo 主题中嵌入评论插件，用户提交评论时会发数据发送到 leancloud 对外开放的接口，从而实现保存评论信息。</p>
+<p>而且，该插件不需要登录。这样评论本身就没有了限制，大家可以畅所欲言，比畅言更畅言。但这种方式对博主本身的安全性有一定的影响，比如恶意评论导致 leancloud 的接口频繁调用。</p>
+<h1 id="接入方式"><a href="#接入方式" class="headerlink" title="接入方式"></a>接入方式</h1><p>下面是以 NexT(7.8.0) 为例进行接入说明。</p>
+<h2 id="注册-leancloud"><a href="#注册-leancloud" class="headerlink" title="注册 leancloud"></a>注册 leancloud</h2><p>登录 <a target="_blank" rel="noopener" href="https://console.leancloud.app/">leancloud</a> 注册账号。<br><img src="/imgs/2024/0208_leancloud_register.png" alt="账号注册"></p>
+<p>注意一定要用国际版，国内版存在个人信息验证问题！！！</p>
+<p>注册成功并登录后，需要邮箱验证。</p>
+<p>验证成功后就可以创建自己的应用了，在首页点击：Create App<br><img src="/imgs/2024/0208_leancloud_create_app.png" alt="创建 app"></p>
+<p>选择开发者模式<br><img src="/imgs/2024/0208_leancloud_create_app_dev.png" alt="选择开发者模式"></p>
+<p>创建完成过后点【设置】查看 app id 等信息。<br><img src="/imgs/2024/0208_leancloud_app_setting.png" alt="获取 AppId 等信息"></p>
+<p>图上标记的信息需要在下面 NexT 主题中配置。</p>
+<h2 id="配置-NexT"><a href="#配置-NexT" class="headerlink" title="配置 NexT"></a>配置 NexT</h2><p>在 _config.yml 中找到评论相关配置，设置评论方式为 valine，然后设置 app id 等信息</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">comments:</span></span><br><span class="line">  <span class="comment"># Choose a comment system to be displayed by default.</span></span><br><span class="line">  <span class="comment"># Available values: changyan | disqus | disqusjs | gitalk | livere | valine</span></span><br><span class="line">  <span class="attr">active:</span> <span class="string">valine</span></span><br><span class="line"></span><br><span class="line"><span class="attr">valine:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">appid:</span> <span class="string">xxxx</span> <span class="comment"># Your leancloud application appid</span></span><br><span class="line">  <span class="attr">appkey:</span> <span class="string">xxxx</span> <span class="comment"># Your leancloud application appkey</span></span><br><span class="line">  <span class="attr">serverURLs:</span> <span class="string">https://xxxx</span> <span class="comment"># 会往这个地址中发送数据</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="/imgs/2024/0208_valine_comment.png" alt="评论"></p>
 
     </div>
 
@@ -286,17 +311,21 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2024/02/06/Hexo-%E4%BD%BF%E7%94%A8/" rel="next" title="Hexo 使用">
-      Hexo 使用 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="Spring Bean 生命周期">
+      <i class="fa fa-chevron-left"></i> Spring Bean 生命周期
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -356,7 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pulsar-%E5%BC%82%E5%9C%B0%E5%AE%B9%E7%81%BE"><span class="nav-number">1.</span> <span class="nav-text">Pulsar 异地容灾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">多集群部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9C%B0%E5%8C%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%89%AF%E6%9C%AC%E4%BF%9D%E5%AD%98%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.</span> <span class="nav-text">基于地区的数据副本保存策略</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">评论系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#leancloud-valine"><span class="nav-number">2.</span> <span class="nav-text">leancloud &amp; valine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">接入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C-leancloud"><span class="nav-number">3.1.</span> <span class="nav-text">注册 leancloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-NexT"><span class="nav-number">3.2.</span> <span class="nav-text">配置 NexT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">3.3.</span> <span class="nav-text">效果</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
