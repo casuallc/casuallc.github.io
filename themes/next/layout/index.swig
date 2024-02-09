@@ -6,6 +6,7 @@
 {% block class %}index posts-expand{% endblock %}
 
 {% block content %}
+  {% include '_macro/carousel.swig' %}
 
   {%- for post in page.posts.toArray() %}
     {{ partial('_macro/post.swig', {post: post, is_index: true}) }}

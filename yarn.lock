@@ -1108,6 +1108,24 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lodash.deburr@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/lodash.deburr/-/lodash.deburr-4.1.0.tgz"
+  integrity sha512-m/M1U1f3ddMCs6Hq2tAsYThTBDaAKFDX3dwDo97GEYzamXi9SqUpjWi/Rrj/gf3X2n8ktwgZrlP1z6E3v/IExQ==
+
+lodash.kebabcase@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/lodash.kebabcase/-/lodash.kebabcase-4.0.1.tgz"
+  integrity sha512-klTwDV5K5uMm9xlfXAbVc7Y+i7IB6x/mKxTrL6b03xUiOX76HjgjDc0d6gL6uOR70nsUUpwN3dVeJ8gtvKWG3w==
+  dependencies:
+    lodash.deburr "^4.0.0"
+    lodash.words "^4.0.0"
+
+lodash.words@^4.0.0:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/lodash.words/-/lodash.words-4.2.0.tgz"
+  integrity sha512-mXxqd8Yx9BGPij3lZKFSdOsjOTbL4krbCCp9slEozaN4EMppA2dFmK/f8HeohodprY6W0vOdiQ5WFgPaTI75xQ==
+
 lower-case@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/lower-case/-/lower-case-2.0.2.tgz"
@@ -1119,6 +1137,14 @@ luxon@^3.0.4:
   version "3.3.0"
   resolved "https://registry.npmjs.org/luxon/-/luxon-3.3.0.tgz"
   integrity sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==
+
+markdown-it-named-headings@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/markdown-it-named-headings/-/markdown-it-named-headings-1.1.0.tgz"
+  integrity sha512-+aUoMYdhjiqRITbMqK179NzmF9uOyfcaockOjrscA4BDuRgY5pHftaVhRwvKUCt0kgJjPFC+g+PgmfBY2ds2uA==
+  dependencies:
+    lodash.kebabcase "4.0.1"
+    unidecode "^0.1.8"
 
 marked@^4.3.0:
   version "4.3.0"
@@ -1648,6 +1674,11 @@ type-check@~0.3.2:
   integrity sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==
   dependencies:
     prelude-ls "~1.1.2"
+
+unidecode@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/unidecode/-/unidecode-0.1.8.tgz"
+  integrity sha512-SdoZNxCWpN2tXTCrGkPF/0rL2HEq+i2gwRG1ReBvx8/0yTzC3enHfugOf8A9JBShVwwrRIkLX0YcDUGbzjbVCA==
 
 universalify@^0.2.0:
   version "0.2.0"
