@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"width":240},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Rust 简介Rust 是由 Mozilla 主导开发的通用、编译型编程语言。设计准则为“安全、并发、实用”，支持函数式、并行式、过程式以及面向对象的程式设计风格。 Rust 是一种系统编程语言，通常用于构建快速可靠的软件，特别是在需要内存安全和线程安全至关重要的情况下，如操作系统、游戏引擎和Web浏览器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rust 简单入门">
+<meta property="og:url" content="https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="一叶扁舟">
+<meta property="og:description" content="Rust 简介Rust 是由 Mozilla 主导开发的通用、编译型编程语言。设计准则为“安全、并发、实用”，支持函数式、并行式、过程式以及面向对象的程式设计风格。 Rust 是一种系统编程语言，通常用于构建快速可靠的软件，特别是在需要内存安全和线程安全至关重要的情况下，如操作系统、游戏引擎和Web浏览器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-19T06:39:35.000Z">
+<meta property="article:modified_time" content="2024-02-19T06:39:35.000Z">
+<meta property="article:author" content="安可">
+<meta property="article:tag" content="changqing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+  <title>rust 简单入门 | 一叶扁舟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">一叶扁舟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-友链">
+
+    <a href="/friends/" rel="section"><i class="fa fa-fw fa-group"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/casuallc" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/imgs/avatar.png">
+      <meta itemprop="name" content="安可">
+      <meta itemprop="description" content="闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁舟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rust 简单入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-19 14:39:35" itemprop="dateCreated datePublished" datetime="2024-02-19T14:39:35+08:00">2024-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024/" itemprop="url" rel="index"><span itemprop="name">2024</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Rust-简介"><a href="#Rust-简介" class="headerlink" title="Rust 简介"></a>Rust 简介</h1><p>Rust 是由 Mozilla 主导开发的通用、编译型编程语言。设计准则为“安全、并发、实用”，支持函数式、并行式、过程式以及面向对象的程式设计风格。</p>
+<p>Rust 是一种系统编程语言，通常用于构建快速可靠的软件，特别是在需要内存安全和线程安全至关重要的情况下，如操作系统、游戏引擎和Web浏览器。</p>
+<span id="more"></span>
+
+<p>Rust 的一些关键特性：</p>
+<ul>
+<li><p>无 GC：Rust 通过其所有权系统实现内存安全，该系统确保有效地管理内存而无需垃圾收集器。</p>
+</li>
+<li><p>零成本抽象：Rust 允许使用高级抽象而不产生运行时开销，使得编写既安全又高效的代码成为可能。</p>
+</li>
+<li><p>高并发：Rust 的所有权模型和类型系统在编译时防止数据竞争，确保线程安全，使开发人员可以放心地编写并发代码。</p>
+</li>
+<li><p>Cargo 包管理器：Rust 配备了 Cargo，一个强大的包管理器和构建系统，简化了管理依赖项和构建项目的过程。</p>
+</li>
+<li><p>社区驱动的开发：Rust 拥有一个充满活力和积极的社区，为其开发、文档和生态系统做出贡献。</p>
+</li>
+</ul>
+<h1 id="简答使用"><a href="#简答使用" class="headerlink" title="简答使用"></a>简答使用</h1><blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/title-page.html">https://doc.rust-lang.org/book/title-page.html</a></p>
+</blockquote>
+<h2 id="安装（windows）"><a href="#安装（windows）" class="headerlink" title="安装（windows）"></a>安装（windows）</h2><p>到 <a target="_blank" rel="noopener" href="https://www.rust-lang.org/tools/install">Rust 官网</a> 下载 Rust 安装器安装即可（可能需要先安装 Visual Studio）。</p>
+<p>安装后打开 PowerShell 执行 rustc –version，如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\casua&gt; rustc <span class="literal">--version</span></span><br><span class="line">rustc <span class="number">1.75</span>.<span class="number">0</span> (<span class="number">82</span>e1608df <span class="number">2023</span><span class="literal">-12-21</span>)</span><br><span class="line"><span class="built_in">PS</span> C:\Users\casua&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有如上输出则证明安装成功，下面就可以编写测试代码进行功能测试了。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>和其他编程语言一样，从 Hello World 开始了解 Rust。</p>
+<p>首先我们需要创建一个文件夹：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir rust<span class="literal">-test</span> </span><br></pre></td></tr></table></figure>
+
+<p>然后创建 main.rs 文件，并写入如下代码：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译成可执行文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell</span><br></pre></td></tr></table></figure>
+
+<p>编译成功后会生成 main.exe 和 main.pbd 文件，exe 是可执行文件，pbd 是包含调试信息的中间文件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PS E:\rust-test&gt; ls</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    目录: E:\rust-test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                 LastWriteTime         Length Name</span><br><span class="line">----                 -------------         ------ ----</span><br><span class="line">-a----         2024/2/19     15:12         148480 main.exe</span><br><span class="line">-a----         2024/2/19     15:12        1339392 main.pdb</span><br><span class="line">-a----         2024/2/19     15:11             42 main.rs</span><br></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; ./main</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>至此，我们第一个 rust 程序运行成功了。</p>
+<h2 id="包管理工具-Cargo"><a href="#包管理工具-Cargo" class="headerlink" title="包管理工具 Cargo"></a>包管理工具 Cargo</h2><p>用 rustc 只能编译单个文件，如果是一个比较大的项目则需要使用 Cargo，Cargo 是一个包管理工具，可以管理和编译多个 Rust 文件。</p>
+<p>Cargo 在安装 Rust 时已经默认安装了，所以我们可以直接使用。</p>
+<p>首先创建一个工程：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; cargo new hello</span><br><span class="line">     Created binary (application) `hello` package</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; <span class="built_in">cd</span> .\hello\</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    目录: E:\rust<span class="literal">-test</span>\hello</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                 LastWriteTime         Length Name</span><br><span class="line"><span class="literal">----</span>                 <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span></span><br><span class="line">d<span class="literal">-----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>                src</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>              <span class="number">8</span> .gitignore</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>            <span class="number">174</span> Cargo.toml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建成功后会生成 Cargo.toml 文件，文件中记录了项目信息，包含版本、依赖等内容，如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[package]</span><br><span class="line">name = &quot;hello&quot;</span><br><span class="line">version = &quot;0.1.0&quot;</span><br><span class="line">edition = &quot;2021&quot;</span><br><span class="line"></span><br><span class="line"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span><br><span class="line"></span><br><span class="line">[dependencies]</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在 src 目录创建 main.rs，加上刚才测试的代码并使用 cargo 构建：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo build</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.51</span>s</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>构建成功后在 target&#x2F;debug 目录可以看到可执行文件 hello.exe：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; .\target\debug\hello.exe</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以直接使用 cargo run 执行代码：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.00</span>s</span><br><span class="line">     Running `target\debug\hello.exe`</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h1><p>Rust 没有垃圾回收，也不用像 C&#x2F;C++ 那样手动申请内存、释放内存。在 Rust 中，每个值在某个时刻都有唯一一个所有者，所有者发生改变后，该值就不能再次使用。</p>
+<ul>
+<li>Rust 中每个值都有一个 owner。</li>
+<li>同一时刻只能有一个 owner。</li>
+<li>当离开 owner 范围后，该值不能再次使用。</li>
+</ul>
+<h2 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h2><p>举例如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="title function_ invoke__">owner_change</span>(param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;&quot;</span>, param); <span class="comment">// 报错；param 的所有权已经转移到其他地方，因此这里不能再次使用了</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: <span class="type">String</span>) &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">error[<span class="type">E0382</span>]: borrow of moved value: `param`</span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">5</span>:<span class="number">25</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |   let <span class="keyword">param</span> = String::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |       <span class="literal">-----</span> <span class="built_in">move</span> occurs because `param` has <span class="built_in">type</span> `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |   owner_change(<span class="keyword">param</span>);</span><br><span class="line">  |                <span class="literal">-----</span> value moved here</span><br><span class="line"><span class="number">4</span> |</span><br><span class="line"><span class="number">5</span> |   println!(<span class="string">&quot;value: &#123;&#125;&quot;</span>, <span class="keyword">param</span>); // 报错；<span class="keyword">param</span> 的所有权已经转移到其他地方，因此这里不能再次使用了</span><br><span class="line">      ...</span><br><span class="line">  |                         ^^^^^ value borrowed here after <span class="built_in">move</span></span><br><span class="line">  |</span><br><span class="line">note: consider changing this <span class="keyword">parameter</span> <span class="built_in">type</span> <span class="keyword">in</span> <span class="function"><span class="keyword">function</span> `<span class="title">owner_change</span>` <span class="title">to</span> <span class="title">borrow</span> <span class="title">instead</span> <span class="title">if</span> <span class="title">owning</span> <span class="title">the</span> <span class="title">value</span> <span class="title">isn</span>&#x27;<span class="title">t</span> <span class="title">necessary</span></span></span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">9</span>:<span class="number">20</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">9</span> | fn owner_change(v: String) &#123;</span><br><span class="line">  |    <span class="literal">------------</span>    ^^^^^^ this <span class="keyword">parameter</span> takes ownership of the value</span><br><span class="line">  |    |</span><br><span class="line">  |    <span class="keyword">in</span> this <span class="function"><span class="keyword">function</span></span></span><br><span class="line">  = note: this error originates <span class="keyword">in</span> the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (<span class="keyword">in</span> Nightly builds, run with <span class="literal">-Z</span> macro<span class="literal">-backtrace</span> <span class="keyword">for</span> more info)</span><br><span class="line">help: consider cloning the value <span class="keyword">if</span> the performance cost is acceptable</span><br><span class="line">  |</span><br><span class="line"><span class="number">3</span> |   owner_change(param.clone());</span><br><span class="line">  |                     ++++++++</span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> more information about this error, <span class="keyword">try</span> `rustc <span class="literal">--explain</span> E0382`.</span><br><span class="line">error: could not compile `hello` (bin <span class="string">&quot;hello&quot;</span>) due to previous error</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>但我们可以在方法执行完再次获取到所有权，如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="title function_ invoke__">owner_change</span>(param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;&quot;</span>, param); <span class="comment">// 正常输出</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">String</span> &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">  v</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量传递"><a href="#变量传递" class="headerlink" title="变量传递"></a>变量传递</h2><p>同样，如果一个变量赋予另外一个变量，则之前的变量不能再次使用，如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s1</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line">  <span class="title function_ invoke__">println</span>(<span class="string">&quot;s1: &#123;&#125;, s2: &#123;&#125;&quot;</span>, s1, s2); <span class="comment">// 报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">error[<span class="type">E0382</span>]: borrow of moved value: `s1`</span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">4</span>:<span class="number">30</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |   let s1 = String::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |       <span class="literal">--</span> <span class="built_in">move</span> occurs because `s1` has <span class="built_in">type</span> `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |   let s2 = s1;</span><br><span class="line">  |            <span class="literal">--</span> value moved here</span><br><span class="line"><span class="number">4</span> |   println!(<span class="string">&quot;s1: &#123;&#125;, s2: &#123;&#125;&quot;</span>, s1, s2);</span><br><span class="line">  |                              ^^ value borrowed here after <span class="built_in">move</span></span><br><span class="line">  |</span><br><span class="line">  = note: this error originates <span class="keyword">in</span> the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (<span class="keyword">in</span> Nightly builds, run with <span class="literal">-Z</span> macro<span class="literal">-backtrace</span> <span class="keyword">for</span> more info)</span><br><span class="line">help: consider cloning the value <span class="keyword">if</span> the performance cost is acceptable</span><br><span class="line">  |</span><br><span class="line"><span class="number">3</span> |   let s2 = s1.clone();</span><br><span class="line">  |              ++++++++</span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> more information about this error, <span class="keyword">try</span> `rustc <span class="literal">--explain</span> E0382`.</span><br><span class="line">error: could not compile `hello` (bin <span class="string">&quot;hello&quot;</span>) due to previous error</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="传递地址"><a href="#传递地址" class="headerlink" title="传递地址"></a>传递地址</h2><p>在方法中传递引用所有权会发生改变，传递地址所有权不会发生改变，因此如下代码可以正常运行：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">len</span> = <span class="title function_ invoke__">owner_change</span>(&amp;param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;, len: &#123;&#125;&quot;</span>, param, len);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">  v.<span class="title function_ invoke__">len</span>() <span class="comment">// 非分号结尾表示返回值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.29</span>s</span><br><span class="line">     Running `target\debug\hello.exe`</span><br><span class="line">value <span class="keyword">in</span> method: hello</span><br><span class="line">value: hello, len: <span class="number">5</span></span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>上面体验了下 Rust 的基本用法，主要是所有权这块。Rust 在编译时强制用户按照约定的规则编写代码，增加了代码编写难度。一旦编译成功，则基本不可能出现内存泄漏问题。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/14/%E7%95%AA%E8%8C%84%E5%9C%9F%E8%B1%86%E8%82%A5%E7%89%9B/" rel="prev" title="番茄土豆肥牛">
+      <i class="fa fa-chevron-left"></i> 番茄土豆肥牛
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Rust-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Rust 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E7%AD%94%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">简答使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%88windows%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">安装（windows）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.2.</span> <span class="nav-text">Hello World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-Cargo"><span class="nav-number">2.3.</span> <span class="nav-text">包管理工具 Cargo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">3.</span> <span class="nav-text">所有权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">方法调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BC%A0%E9%80%92"><span class="nav-number">3.2.</span> <span class="nav-text">变量传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E9%80%92%E5%9C%B0%E5%9D%80"><span class="nav-number">3.3.</span> <span class="nav-text">传递地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="安可"
+      src="/imgs/avatar.png">
+  <p class="site-author-name" itemprop="name">安可</p>
+  <div class="site-description" itemprop="description">闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/casuallc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;casuallc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/coderqing" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;coderqing" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">安可</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">9k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9 分钟</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'g35up0qqz7wC6PpRmOHkoxuJ-MdYXbMMI',
+      appKey     : 'dqDY7XgTVacHmkoT7eTIPlcl',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://g35up0qq.api.lncldglobal.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

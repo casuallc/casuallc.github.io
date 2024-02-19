@@ -1,7 +1,11 @@
+https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/
+https://casuallc.github.io/schedule/index.html
+https://casuallc.github.io/2023/02/06/hello-world/
+https://casuallc.github.io/2024/02/14/%E7%95%AA%E8%8C%84%E5%9C%9F%E8%B1%86%E8%82%A5%E7%89%9B/
+https://casuallc.github.io/2024/02/14/%E5%9C%B0%E4%B8%89%E9%B2%9C%E5%AE%B6%E5%B8%B8%E5%81%9A%E6%B3%95/
 https://casuallc.github.io/2024/02/08/%E5%9F%BA%E4%BA%8E-valine-%E5%92%8C-leancloud-%E7%9A%84%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/
 https://casuallc.github.io/2024/02/06/Hexo-%E4%BD%BF%E7%94%A8/
 https://casuallc.github.io/2024/02/07/Spring-Bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/
-https://casuallc.github.io/2023/04/05/hello-world/
 https://casuallc.github.io/404.html
 https://casuallc.github.io/categories/index.html
 https://casuallc.github.io/tags/index.html
@@ -13,4 +17,6 @@ https://casuallc.github.io/tags/%E6%95%99%E7%A8%8B/
 https://casuallc.github.io/tags/%E5%AD%A6%E4%B9%A0/
 https://casuallc.github.io/tags/Spring-Boot/
 https://casuallc.github.io/tags/%E5%B7%A5%E5%85%B7/
+https://casuallc.github.io/tags/%E5%81%9A%E8%8F%9C/
+https://casuallc.github.io/tags/%E7%94%9F%E6%B4%BB/
 https://casuallc.github.io/categories/2024/

@@ -14,26 +14,27 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"casuallc.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"width":240},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Pulsar 异地容灾多集群部署这种方式利用了消息的异步复制功能。在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可">
-<meta property="og:type" content="article">
-<meta property="og:title" content="测试文章">
-<meta property="og:url" content="https://casuallc.github.io/2023/04/05/hello-world/index.html">
+  <meta name="description" content="闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="日程表">
+<meta property="og:url" content="https://casuallc.github.io/schedule/index.html">
 <meta property="og:site_name" content="一叶扁舟">
-<meta property="og:description" content="Pulsar 异地容灾多集群部署这种方式利用了消息的异步复制功能。在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可">
+<meta property="og:description" content="闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-05T08:16:39.621Z">
-<meta property="article:modified_time" content="2024-02-08T04:11:32.323Z">
+<meta property="article:published_time" content="2024-02-09T10:46:50.000Z">
+<meta property="article:modified_time" content="2024-02-18T06:16:58.520Z">
 <meta property="article:author" content="安可">
 <meta property="article:tag" content="changqing">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://casuallc.github.io/2023/04/05/hello-world/">
+<link rel="canonical" href="https://casuallc.github.io/schedule/">
 
 
 <script id="page-configurations">
@@ -41,12 +42,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>测试文章 | 一叶扁舟</title>
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+  <title>日程表 | 一叶扁舟
+</title>
   
 
 
@@ -134,6 +136,11 @@
     <a href="/friends/" rel="section"><i class="fa fa-fw fa-group"></i>友链</a>
 
   </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -185,117 +192,200 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
-          <div class="content post posts-expand">
+          <div class="content page posts-expand">
             
 
     
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2023/04/05/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/imgs/avatar.png">
-      <meta itemprop="name" content="安可">
-      <meta itemprop="description" content="闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁舟">
-    </span>
+    
+    
+    <div class="post-block" lang="zh-CN">
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          测试文章
-        </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+<h1 class="post-title" itemprop="name headline">日程表
+</h1>
 
-              <time title="创建时间：2023-04-05 16:16:39" itemprop="dateCreated datePublished" datetime="2023-04-05T16:16:39+08:00">2023-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-08 12:11:32" itemprop="dateModified" datetime="2024-02-08T12:11:32+08:00">2024-02-08</time>
-              </span>
-
-          
+<div class="post-meta">
   
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/04/05/hello-world/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/04/05/hello-world/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>481</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
 
-        </div>
-      </header>
+</div>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
-        <h2 id="Pulsar-异地容灾"><a href="#Pulsar-异地容灾" class="headerlink" title="Pulsar 异地容灾"></a>Pulsar 异地容灾</h2><h3 id="多集群部署"><a href="#多集群部署" class="headerlink" title="多集群部署"></a>多集群部署</h3><p>这种方式利用了消息的异步复制功能。<br>在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可能有部分丢失），客户端就可以通过备份集群继续处理消息。同时，客户端发送到备份集群的消息会在之前集群恢复后发送到之前的集群。</p>
-<span id="more"></span>
+      
+      
+      <div class="post-body">
+          <div class="event-list">
+          </div>
+          <script>
+(function() {
+  // Initialization
+  var calendar = {
+    orderBy     : 'startTime',
+    showLocation: false,
+    offsetMax   : 72,
+    offsetMin   : 4,
+    showDeleted : false,
+    singleEvents: true,
+    maxResults  : 250
+  };
 
-<h3 id="基于地区的数据副本保存策略"><a href="#基于地区的数据副本保存策略" class="headerlink" title="基于地区的数据副本保存策略"></a>基于地区的数据副本保存策略</h3><p>这种方式利用了消息的同步复制功能。<br>即在多个数据中心建立一个大集群，每个地区的计算节点收到消息后都会通过同步的方式发送到多个数据中心的存储节点，从而保证一条消息的多个副本分散在多个数据中心（ADMQ会根据存储节点的配置信息区分不同数据中心的节点，消息写入时就可以确保消息写入到多个数据中心的节点）。这样一个数据中心不可用时，客户端可以读取到存在其他数据中心的消息。<br>这种方案能确保不会丢失消息，但是延迟会比第一种高一点。</p>
+  // Read config form theme config file
+  Object.assign(calendar, {"calendar_id":"<required>","api_key":"<required>","orderBy":"startTime","offsetMax":24,"offsetMin":4,"showDeleted":false,"singleEvents":true,"maxResults":250});
 
-    </div>
+  var now = new Date();
+  var timeMax = new Date();
+  var timeMin = new Date();
 
-    
-    
-    
+  timeMax.setHours(now.getHours() + calendar.offsetMax);
+  timeMin.setHours(now.getHours() - calendar.offsetMin);
 
-      <footer class="post-footer">
+  // Build URL
+  const params = {
+    key         : calendar.api_key,
+    orderBy     : calendar.orderBy,
+    timeMax     : timeMax.toISOString(),
+    timeMin     : timeMin.toISOString(),
+    showDeleted : calendar.showDeleted,
+    singleEvents: calendar.singleEvents,
+    maxResults  : calendar.maxResults
+  };
+
+  var request_url = 'https://www.googleapis.com/calendar/v3/calendars/' + calendar.calendar_id + '/events?' + Object.entries(params).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+
+  fetchData();
+  var fetchDataTimer = setInterval(fetchData, 60000);
+  window.addEventListener('pjax:send', () => {
+    clearInterval(fetchDataTimer);
+  });
+
+  function fetchData() {
+    var eventList = document.querySelector('.event-list');
+    if (!eventList) return;
+
+    fetch(request_url).then(response => {
+      return response.json();
+    }).then(data => {
+      if (data.items.length === 0) {
+        eventList.innerHTML = '<hr>';
+        return;
+      }
+      // Clean the event list
+      eventList.innerHTML = '';
+      var prevEnd = 0; // used to decide where to insert an <hr>
+
+      data.items.forEach(event => {
+        // Parse data
+        var utc   = new Date().getTimezoneOffset() * 60000;
+        var start = event.start.dateTime = new Date(event.start.dateTime || (new Date(event.start.date).getTime() + utc));
+        var end   = event.end.dateTime = new Date(event.end.dateTime || (new Date(event.end.date).getTime() + utc));
+
+        tense = judgeTense(now, start, end); // 0:now 1:future -1:past
+
+        if (tense === 1 && prevEnd < now) {
+          eventList.innerHTML += '<hr>';
+        }
+
+        eventDOM = buildEventDOM(tense, event);
+        eventList.innerHTML += eventDOM;
+
+        prevEnd = end;
+      });
+    });
+  }
+
+  function getRelativeTime(current, previous) {
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+    var tense = elapsed > 0 ? 'ago' : 'later';
+
+    elapsed = Math.abs(elapsed);
+
+    if      ( elapsed < msPerHour  ) {
+      return Math.round(elapsed / msPerMinute) + ' minutes ' + tense;
+    }
+    else if ( elapsed < msPerDay   ) {
+      return Math.round(elapsed / msPerHour) + ' hours ' + tense;
+    }
+    else if ( elapsed < msPerMonth ) {
+      return 'about ' + Math.round(elapsed / msPerDay) + ' days ' + tense;
+    }
+    else if ( elapsed < msPerYear  ) {
+      return 'about ' + Math.round(elapsed / msPerMonth) + ' months ' + tense;
+    }
+    else {
+      return 'about' + Math.round(elapsed / msPerYear) + ' years' + tense;
+    }
+  }
+
+  function judgeTense(now, eventStart, eventEnd) {
+    if      (eventEnd   < now) { return -1; }
+    else if (eventStart > now) { return  1; }
+    else                       { return  0; }
+  }
+
+  function buildEventDOM(tense, event) {
+    var tenseClass = '';
+    var start      = event.start.dateTime;
+    var end        = event.end.dateTime;
+    switch(tense) {
+      case 0 : // now
+        tenseClass = 'event-now';
+        break;
+      case 1 : // future
+        tenseClass = 'event-future';
+        break;
+      case -1: // past
+        tenseClass = 'event-past';
+        break;
+      default:
+        throw 'Time data error';
+    }
+    var durationFormat = {
+      weekday: 'short',
+      hour   : '2-digit',
+      minute : '2-digit'
+    };
+    var relativeTimeStr = (tense === 0) ? 'NOW' : getRelativeTime(now, start);
+    var durationStr = start.toLocaleTimeString([], durationFormat) + ' - ' + end.toLocaleTimeString([], durationFormat);
+
+    var locationDOM = '';
+    if (calendar.showLocation && event.location) {
+      locationDOM = '<span class="event-location event-details">' + event.location + '</span>';
+    }
+
+    var eventContent = `<div class="event ${tenseClass}">
+        <h2 class="event-summary">
+          ${event.summary}
+          <span class="event-relative-time">${relativeTimeStr}</span>
+        </h2>
+        ${locationDOM}
+        <span class="event-duration event-details">${durationStr}</span>
+      </div>`;
+    return eventContent;
+  }
+})();
+</script>
 
         
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2024/02/06/Hexo-%E4%BD%BF%E7%94%A8/" rel="next" title="Hexo 使用">
-      Hexo 使用 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      </div>
+      
+      
+      
     </div>
-      </footer>
     
-  </article>
-  
-  
-  
 
+    
+    
+    
 
 
           </div>
@@ -347,7 +437,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pulsar-%E5%BC%82%E5%9C%B0%E5%AE%B9%E7%81%BE"><span class="nav-number">1.</span> <span class="nav-text">Pulsar 异地容灾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">多集群部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9C%B0%E5%8C%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%89%AF%E6%9C%AC%E4%BF%9D%E5%AD%98%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.</span> <span class="nav-text">基于地区的数据副本保存策略</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -363,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -372,7 +461,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -416,15 +505,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">3k</span>
+    <span title="站点总字数">9k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3 分钟</span>
+    <span title="站点阅读时长">9 分钟</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
 
         
 
@@ -441,6 +528,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

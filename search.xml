@@ -63,7 +63,7 @@
   </entry>
   <entry>
     <title>测试文章</title>
-    <url>/2023/04/05/hello-world/</url>
+    <url>/2023/02/06/hello-world/</url>
     <content><![CDATA[<h2 id="Pulsar-异地容灾"><a href="#Pulsar-异地容灾" class="headerlink" title="Pulsar 异地容灾"></a>Pulsar 异地容灾</h2><h3 id="多集群部署"><a href="#多集群部署" class="headerlink" title="多集群部署"></a>多集群部署</h3><p>这种方式利用了消息的异步复制功能。<br>在两个数据中心分别部署独立的集群，然后通过配置建立两个集群间的消息复制通道，这样其中一个集群收到的消息都会通过异步的方式发送到另外一个集群。正常情况下，客户端可以通过一个集群实现消息的发布和订阅，另外一个集群只是作为备份。当提供服务的集群不可用时，客户端主动切换到备份集群。备份集群保存了之前集群的所有数据（由于是异步复制，最新消息可能有部分丢失），客户端就可以通过备份集群继续处理消息。同时，客户端发送到备份集群的消息会在之前集群恢复后发送到之前的集群。</p>
 <span id="more"></span>
 
@@ -99,6 +99,172 @@
       <tags>
         <tag>教程</tag>
         <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust 简单入门</title>
+    <url>/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h1 id="Rust-简介"><a href="#Rust-简介" class="headerlink" title="Rust 简介"></a>Rust 简介</h1><p>Rust 是由 Mozilla 主导开发的通用、编译型编程语言。设计准则为“安全、并发、实用”，支持函数式、并行式、过程式以及面向对象的程式设计风格。</p>
+<p>Rust 是一种系统编程语言，通常用于构建快速可靠的软件，特别是在需要内存安全和线程安全至关重要的情况下，如操作系统、游戏引擎和Web浏览器。</p>
+<span id="more"></span>
+
+<p>Rust 的一些关键特性：</p>
+<ul>
+<li><p>无 GC：Rust 通过其所有权系统实现内存安全，该系统确保有效地管理内存而无需垃圾收集器。</p>
+</li>
+<li><p>零成本抽象：Rust 允许使用高级抽象而不产生运行时开销，使得编写既安全又高效的代码成为可能。</p>
+</li>
+<li><p>高并发：Rust 的所有权模型和类型系统在编译时防止数据竞争，确保线程安全，使开发人员可以放心地编写并发代码。</p>
+</li>
+<li><p>Cargo 包管理器：Rust 配备了 Cargo，一个强大的包管理器和构建系统，简化了管理依赖项和构建项目的过程。</p>
+</li>
+<li><p>社区驱动的开发：Rust 拥有一个充满活力和积极的社区，为其开发、文档和生态系统做出贡献。</p>
+</li>
+</ul>
+<h1 id="简答使用"><a href="#简答使用" class="headerlink" title="简答使用"></a>简答使用</h1><blockquote>
+<p>参考：<a href="https://doc.rust-lang.org/book/title-page.html">https://doc.rust-lang.org/book/title-page.html</a></p>
+</blockquote>
+<h2 id="安装（windows）"><a href="#安装（windows）" class="headerlink" title="安装（windows）"></a>安装（windows）</h2><p>到 <a href="https://www.rust-lang.org/tools/install">Rust 官网</a> 下载 Rust 安装器安装即可（可能需要先安装 Visual Studio）。</p>
+<p>安装后打开 PowerShell 执行 rustc –version，如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\casua&gt; rustc <span class="literal">--version</span></span><br><span class="line">rustc <span class="number">1.75</span>.<span class="number">0</span> (<span class="number">82</span>e1608df <span class="number">2023</span><span class="literal">-12-21</span>)</span><br><span class="line"><span class="built_in">PS</span> C:\Users\casua&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有如上输出则证明安装成功，下面就可以编写测试代码进行功能测试了。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>和其他编程语言一样，从 Hello World 开始了解 Rust。</p>
+<p>首先我们需要创建一个文件夹：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">mkdir rust<span class="literal">-test</span> </span><br></pre></td></tr></table></figure>
+
+<p>然后创建 main.rs 文件，并写入如下代码：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译成可执行文件：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell</span><br></pre></td></tr></table></figure>
+
+<p>编译成功后会生成 main.exe 和 main.pbd 文件，exe 是可执行文件，pbd 是包含调试信息的中间文件。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">PS E:\rust-test&gt; ls</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    目录: E:\rust-test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                 LastWriteTime         Length Name</span><br><span class="line">----                 -------------         ------ ----</span><br><span class="line">-a----         2024/2/19     15:12         148480 main.exe</span><br><span class="line">-a----         2024/2/19     15:12        1339392 main.pdb</span><br><span class="line">-a----         2024/2/19     15:11             42 main.rs</span><br></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; ./main</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>至此，我们第一个 rust 程序运行成功了。</p>
+<h2 id="包管理工具-Cargo"><a href="#包管理工具-Cargo" class="headerlink" title="包管理工具 Cargo"></a>包管理工具 Cargo</h2><p>用 rustc 只能编译单个文件，如果是一个比较大的项目则需要使用 Cargo，Cargo 是一个包管理工具，可以管理和编译多个 Rust 文件。</p>
+<p>Cargo 在安装 Rust 时已经默认安装了，所以我们可以直接使用。</p>
+<p>首先创建一个工程：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; cargo new hello</span><br><span class="line">     Created binary (application) `hello` package</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>&gt; <span class="built_in">cd</span> .\hello\</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    目录: E:\rust<span class="literal">-test</span>\hello</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                 LastWriteTime         Length Name</span><br><span class="line"><span class="literal">----</span>                 <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span></span><br><span class="line">d<span class="literal">-----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>                src</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>              <span class="number">8</span> .gitignore</span><br><span class="line"><span class="literal">-a----</span>         <span class="number">2024</span>/<span class="number">2</span>/<span class="number">19</span>     <span class="number">15</span>:<span class="number">24</span>            <span class="number">174</span> Cargo.toml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建成功后会生成 Cargo.toml 文件，文件中记录了项目信息，包含版本、依赖等内容，如下：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">[package]</span><br><span class="line">name = &quot;hello&quot;</span><br><span class="line">version = &quot;0.1.0&quot;</span><br><span class="line">edition = &quot;2021&quot;</span><br><span class="line"></span><br><span class="line"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span><br><span class="line"></span><br><span class="line">[dependencies]</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在 src 目录创建 main.rs，加上刚才测试的代码并使用 cargo 构建：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo build</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.51</span>s</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>构建成功后在 target&#x2F;debug 目录可以看到可执行文件 hello.exe：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; .\target\debug\hello.exe</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以直接使用 cargo run 执行代码：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.00</span>s</span><br><span class="line">     Running `target\debug\hello.exe`</span><br><span class="line">Hello World</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h1><p>Rust 没有垃圾回收，也不用像 C&#x2F;C++ 那样手动申请内存、释放内存。在 Rust 中，每个值在某个时刻都有唯一一个所有者，所有者发生改变后，该值就不能再次使用。</p>
+<ul>
+<li>Rust 中每个值都有一个 owner。</li>
+<li>同一时刻只能有一个 owner。</li>
+<li>当离开 owner 范围后，该值不能再次使用。</li>
+</ul>
+<h2 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h2><p>举例如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="title function_ invoke__">owner_change</span>(param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;&quot;</span>, param); <span class="comment">// 报错；param 的所有权已经转移到其他地方，因此这里不能再次使用了</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: <span class="type">String</span>) &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">error[<span class="type">E0382</span>]: borrow of moved value: `param`</span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">5</span>:<span class="number">25</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |   let <span class="keyword">param</span> = String::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |       <span class="literal">-----</span> <span class="built_in">move</span> occurs because `param` has <span class="built_in">type</span> `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |   owner_change(<span class="keyword">param</span>);</span><br><span class="line">  |                <span class="literal">-----</span> value moved here</span><br><span class="line"><span class="number">4</span> |</span><br><span class="line"><span class="number">5</span> |   println!(<span class="string">&quot;value: &#123;&#125;&quot;</span>, <span class="keyword">param</span>); // 报错；<span class="keyword">param</span> 的所有权已经转移到其他地方，因此这里不能再次使用了</span><br><span class="line">      ...</span><br><span class="line">  |                         ^^^^^ value borrowed here after <span class="built_in">move</span></span><br><span class="line">  |</span><br><span class="line">note: consider changing this <span class="keyword">parameter</span> <span class="built_in">type</span> <span class="keyword">in</span> <span class="function"><span class="keyword">function</span> `<span class="title">owner_change</span>` <span class="title">to</span> <span class="title">borrow</span> <span class="title">instead</span> <span class="title">if</span> <span class="title">owning</span> <span class="title">the</span> <span class="title">value</span> <span class="title">isn</span>&#x27;<span class="title">t</span> <span class="title">necessary</span></span></span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">9</span>:<span class="number">20</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">9</span> | fn owner_change(v: String) &#123;</span><br><span class="line">  |    <span class="literal">------------</span>    ^^^^^^ this <span class="keyword">parameter</span> takes ownership of the value</span><br><span class="line">  |    |</span><br><span class="line">  |    <span class="keyword">in</span> this <span class="function"><span class="keyword">function</span></span></span><br><span class="line">  = note: this error originates <span class="keyword">in</span> the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (<span class="keyword">in</span> Nightly builds, run with <span class="literal">-Z</span> macro<span class="literal">-backtrace</span> <span class="keyword">for</span> more info)</span><br><span class="line">help: consider cloning the value <span class="keyword">if</span> the performance cost is acceptable</span><br><span class="line">  |</span><br><span class="line"><span class="number">3</span> |   owner_change(param.clone());</span><br><span class="line">  |                     ++++++++</span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> more information about this error, <span class="keyword">try</span> `rustc <span class="literal">--explain</span> E0382`.</span><br><span class="line">error: could not compile `hello` (bin <span class="string">&quot;hello&quot;</span>) due to previous error</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>但我们可以在方法执行完再次获取到所有权，如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="title function_ invoke__">owner_change</span>(param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;&quot;</span>, param); <span class="comment">// 正常输出</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">String</span> &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">  v</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量传递"><a href="#变量传递" class="headerlink" title="变量传递"></a>变量传递</h2><p>同样，如果一个变量赋予另外一个变量，则之前的变量不能再次使用，如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s1</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line">  <span class="title function_ invoke__">println</span>(<span class="string">&quot;s1: &#123;&#125;, s2: &#123;&#125;&quot;</span>, s1, s2); <span class="comment">// 报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">error[<span class="type">E0382</span>]: borrow of moved value: `s1`</span><br><span class="line"> <span class="literal">--</span>&gt; src\main.rs:<span class="number">4</span>:<span class="number">30</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |   let s1 = String::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |       <span class="literal">--</span> <span class="built_in">move</span> occurs because `s1` has <span class="built_in">type</span> `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |   let s2 = s1;</span><br><span class="line">  |            <span class="literal">--</span> value moved here</span><br><span class="line"><span class="number">4</span> |   println!(<span class="string">&quot;s1: &#123;&#125;, s2: &#123;&#125;&quot;</span>, s1, s2);</span><br><span class="line">  |                              ^^ value borrowed here after <span class="built_in">move</span></span><br><span class="line">  |</span><br><span class="line">  = note: this error originates <span class="keyword">in</span> the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (<span class="keyword">in</span> Nightly builds, run with <span class="literal">-Z</span> macro<span class="literal">-backtrace</span> <span class="keyword">for</span> more info)</span><br><span class="line">help: consider cloning the value <span class="keyword">if</span> the performance cost is acceptable</span><br><span class="line">  |</span><br><span class="line"><span class="number">3</span> |   let s2 = s1.clone();</span><br><span class="line">  |              ++++++++</span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> more information about this error, <span class="keyword">try</span> `rustc <span class="literal">--explain</span> E0382`.</span><br><span class="line">error: could not compile `hello` (bin <span class="string">&quot;hello&quot;</span>) due to previous error</span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="传递地址"><a href="#传递地址" class="headerlink" title="传递地址"></a>传递地址</h2><p>在方法中传递引用所有权会发生改变，传递地址所有权不会发生改变，因此如下代码可以正常运行：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">param</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">len</span> = <span class="title function_ invoke__">owner_change</span>(&amp;param);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value: &#123;&#125;, len: &#123;&#125;&quot;</span>, param, len);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">owner_change</span>(v: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;value in method: &#123;&#125;&quot;</span>, v);</span><br><span class="line">  v.<span class="title function_ invoke__">len</span>() <span class="comment">// 非分号结尾表示返回值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt; cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (E:\rust<span class="literal">-test</span>\hello)</span><br><span class="line">    Finished dev <span class="function">[<span class="type">unoptimized</span> + <span class="type">debuginfo</span>] <span class="title">target</span></span>(s) <span class="keyword">in</span> <span class="number">0.29</span>s</span><br><span class="line">     Running `target\debug\hello.exe`</span><br><span class="line">value <span class="keyword">in</span> method: hello</span><br><span class="line">value: hello, len: <span class="number">5</span></span><br><span class="line"><span class="built_in">PS</span> E:\rust<span class="literal">-test</span>\hello&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>上面体验了下 Rust 的基本用法，主要是所有权这块。Rust 在编译时强制用户按照约定的规则编写代码，增加了代码编写难度。一旦编译成功，则基本不可能出现内存泄漏问题。</p>
+]]></content>
+      <categories>
+        <category>2024</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>地三鲜家常做法</title>
+    <url>/2024/02/14/%E5%9C%B0%E4%B8%89%E9%B2%9C%E5%AE%B6%E5%B8%B8%E5%81%9A%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="地三鲜家常做法"><a href="#地三鲜家常做法" class="headerlink" title="地三鲜家常做法"></a>地三鲜家常做法</h1><p>过年闲来无事，研究一些家常菜，也满足下自己的胃。</p>
+<p>首先是地三鲜，这个相对来说很简单，而且材料只需要土豆、茄子和青椒。</p>
+<span id="more"></span>
+<h1 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h1><p>茄子、土豆切块，青椒用手撕成小块，然后茄子撒上淀粉，用手抓匀，确保每个茄子上都有一层淀粉。</p>
+<p>调料</p>
+<ul>
+<li>盐</li>
+<li>生抽</li>
+<li>老抽</li>
+<li>鸡精</li>
+<li>耗油</li>
+<li>糖</li>
+<li>葱姜蒜</li>
+<li>玉米淀粉</li>
+</ul>
+<h1 id="准备料汁"><a href="#准备料汁" class="headerlink" title="准备料汁"></a>准备料汁</h1><p>碗中添加盐、生抽、老抽、鸡精、糖、淀粉，加水拌匀。</p>
+<h1 id="油炸"><a href="#油炸" class="headerlink" title="油炸"></a>油炸</h1><p>锅中烧油，六成热后放入土豆、青椒，土豆炸出金黄捞出。</p>
+<p>继续放入茄子，变色后再炸一会捞出。</p>
+<h1 id="炒"><a href="#炒" class="headerlink" title="炒"></a>炒</h1><p>锅中油倒出，留一点准备炒菜。放入葱姜蒜，炒出蒜香。</p>
+<p>然后加入炸后的土豆、青椒和茄子，用铲子炒一会后放入准备好的调料，继续翻炒一会即可装盘捞出。</p>
+]]></content>
+      <categories>
+        <category>2024</category>
+      </categories>
+      <tags>
+        <tag>做菜</tag>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>番茄土豆肥牛</title>
+    <url>/2024/02/14/%E7%95%AA%E8%8C%84%E5%9C%9F%E8%B1%86%E8%82%A5%E7%89%9B/</url>
+    <content><![CDATA[<h1 id="番茄土豆肥牛做法"><a href="#番茄土豆肥牛做法" class="headerlink" title="番茄土豆肥牛做法"></a>番茄土豆肥牛做法</h1><p>分享一道简单好吃的家常菜：番茄土豆肥牛。</p>
+<span id="more"></span>
+
+<h1 id="材料准备"><a href="#材料准备" class="headerlink" title="材料准备"></a>材料准备</h1><p>主要是牛肉卷和番茄，其他都是看心情添加。我们是吃火锅剩了一些牛肉，所以第二天做了这道番茄肥牛，虽然看起来不怎么样，但吃起来还可以。需要准备的菜和调料如下：</p>
+<ul>
+<li>番茄</li>
+<li>土豆</li>
+<li>牛肉卷</li>
+<li>牛肉丸（可选）</li>
+<li>金针菇</li>
+<li>娃娃菜</li>
+<li>小葱</li>
+<li>盐</li>
+<li>葱姜蒜</li>
+<li>老抽</li>
+<li>生抽</li>
+<li>耗油</li>
+<li>白醋</li>
+<li>番茄酱</li>
+<li>淀粉</li>
+</ul>
+<p>土豆和番茄切丁，番茄需要先用开水去皮。</p>
+<h1 id="调汁"><a href="#调汁" class="headerlink" title="调汁"></a>调汁</h1><p>万众放入适量盐、老抽、生抽、耗油、淀粉，加水搅拌均匀。</p>
+<h1 id="把牛肉、金针菇煮熟"><a href="#把牛肉、金针菇煮熟" class="headerlink" title="把牛肉、金针菇煮熟"></a>把牛肉、金针菇煮熟</h1><p>锅中烧水，先放入金针菇，几分钟后捞出备用。</p>
+<p>然后放入土豆，煮熟后捞出。</p>
+<p>最后放入牛肉和牛肉丸，加入少许白醋去腥，等牛肉变色后捞出。</p>
+<h1 id="炒"><a href="#炒" class="headerlink" title="炒"></a>炒</h1><p>锅中烧油，加入葱姜蒜，炒出蒜香后加番茄翻炒，把番茄炒成番茄汁，然后加入刚才调好的酱汁，继续翻炒几下加入少许番茄酱提味。</p>
+<p>然后加入适量水，水开后加入金针菇、土豆、牛肉和牛肉丸，煮几分钟等菜入味后装盘即可。</p>
+]]></content>
+      <categories>
+        <category>2024</category>
+      </categories>
+      <tags>
+        <tag>做菜</tag>
+        <tag>生活</tag>
       </tags>
   </entry>
 </search>
