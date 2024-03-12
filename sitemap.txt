@@ -1,3 +1,4 @@
+https://casuallc.github.io/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/
 https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/
 https://casuallc.github.io/schedule/index.html
 https://casuallc.github.io/2023/02/06/hello-world/

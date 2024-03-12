@@ -197,6 +197,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/imgs/avatar.png">
+      <meta itemprop="name" content="安可">
+      <meta itemprop="description" content="闲着没事，随便写写。随便看看即可，对内容正确性、真实性不能保证。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁舟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">Spring Boot 配置加载流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-08 09:56:25" itemprop="dateCreated datePublished" datetime="2024-03-08T09:56:25+08:00">2024-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024/" itemprop="url" rel="index"><span itemprop="name">2024</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="配置文件加载方式"><a href="#配置文件加载方式" class="headerlink" title="配置文件加载方式"></a>配置文件加载方式</h1><h2 id="常见配置位置"><a href="#常见配置位置" class="headerlink" title="常见配置位置"></a>常见配置位置</h2><ol>
+<li>config 目录</li>
+<li>当前目录</li>
+<li>classpath 下的 config 目录</li>
+<li>classpath 目录</li>
+</ol>
+<p>高优先级的配置会覆盖低优先级的配置。</p>
+<h2 id="完整的配置加载顺序"><a href="#完整的配置加载顺序" class="headerlink" title="完整的配置加载顺序"></a>完整的配置加载顺序</h2><p><strong>Devtools global settings properties on your home directory (~&#x2F;.spring-boot-devtools.properties when devtools is active).</strong></p>
+<p>可以在服务器 home 目录放置配置文件：.spring-boot-devtools.properties，该文件中的配置对服务器上的所有 spring boot 项目都生效。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://casuallc.github.io/2024/02/19/rust-%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -998,7 +1108,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1051,12 +1161,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">9k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9 分钟</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         
