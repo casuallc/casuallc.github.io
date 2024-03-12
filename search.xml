@@ -270,17 +270,34 @@
   <entry>
     <title>Spring Boot 配置加载流程</title>
     <url>/2024/03/08/Spring-Boot-%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="配置文件加载方式"><a href="#配置文件加载方式" class="headerlink" title="配置文件加载方式"></a>配置文件加载方式</h1><h2 id="常见配置位置"><a href="#常见配置位置" class="headerlink" title="常见配置位置"></a>常见配置位置</h2><ol>
+    <content><![CDATA[<h1 id="配置文件加载方式"><a href="#配置文件加载方式" class="headerlink" title="配置文件加载方式"></a>配置文件加载方式</h1><h2 id="指定加载配置的几种方式"><a href="#指定加载配置的几种方式" class="headerlink" title="指定加载配置的几种方式"></a>指定加载配置的几种方式</h2><ul>
+<li><p>使用环境变量（java -Dxx xx.jar）</p>
+<p>-Dspring.config.location&#x3D;</p>
+<p>-Dspring.config.additional-location&#x3D;</p>
+</li>
+<li><p>使用命令行参数(java xx.jar 参数)</p>
+<p>–spring.config.location&#x3D;</p>
+<p>–spring.config.additional-location&#x3D;</p>
+</li>
+<li><p>使用 profile<br>-Dspring.profiles.active&#x3D;dev</p>
+<p>然后就会加载 application-dev.properties 文件</p>
+</li>
+<li><p>使用 include</p>
+<p>-Dspring.profiles.include&#x3D;dev,test</p>
+</li>
+</ul>
+<p>注意：active 和 include 都是只能定义一次，不能重复定义。</p>
+<h2 id="常见配置位置"><a href="#常见配置位置" class="headerlink" title="常见配置位置"></a>常见配置位置</h2><ol>
 <li>config 目录</li>
 <li>当前目录</li>
 <li>classpath 下的 config 目录</li>
 <li>classpath 目录</li>
 </ol>
 <p>高优先级的配置会覆盖低优先级的配置。</p>
-<h2 id="完整的配置加载顺序"><a href="#完整的配置加载顺序" class="headerlink" title="完整的配置加载顺序"></a>完整的配置加载顺序</h2><p><strong>Devtools global settings properties on your home directory (~&#x2F;.spring-boot-devtools.properties when devtools is active).</strong></p>
-<p>可以在服务器 home 目录放置配置文件：.spring-boot-devtools.properties，该文件中的配置对服务器上的所有 spring boot 项目都生效。</p>
 <span id="more"></span>
 
+<h2 id="完整的配置加载顺序"><a href="#完整的配置加载顺序" class="headerlink" title="完整的配置加载顺序"></a>完整的配置加载顺序</h2><p><strong>Devtools global settings properties on your home directory (~&#x2F;.spring-boot-devtools.properties when devtools is active).</strong></p>
+<p>可以在服务器 home 目录放置配置文件：.spring-boot-devtools.properties，该文件中的配置对服务器上的所有 spring boot 项目都生效。</p>
 <p><strong>@TestPropertySource annotations on your tests.</strong></p>
 <p><strong>properties attribute on your tests. Available on @SpringBootTest and the test annotations for testing a particular slice of your application.</strong></p>
 <p><strong>Command line arguments.</strong></p>
